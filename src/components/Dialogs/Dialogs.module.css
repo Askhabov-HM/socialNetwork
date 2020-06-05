@@ -1,0 +1,25 @@
+.dialogsPage{
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+
+.dialogsPage a{
+    color: white;
+}
+
+.dialogsList {
+    padding: 10px;
+}
+
+.userMessages {
+    padding: 10px;
+}
+
+.avatarBlockForDialog{
+    display: inline-block;
+    padding: 5px;
+}
+
+.avatar{
+    max-width: 30px;
+}
