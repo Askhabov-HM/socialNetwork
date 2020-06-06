@@ -30,11 +30,16 @@ const Dialogs = (props) => {
         props.addDialog(dialogTitle);
     }
 
+    let updDialogChange = (e) => {
+        let newDialogTitle = e.target.value;
+        props.dialogChange(newDialogTitle);
+    }
+
     return (
         <div className={CSS.dialogsPage}>
             <div className={CSS.dialogsList}>
                 {dialogsGenerate}
-                <textarea  name="" id="" cols="20" rows="5" ref={addDialogBtnRef} ></textarea><br/>
+                <textarea value={props.newDialogText} name="" id="" cols="20" rows="5" ref={addDialogBtnRef} onChange={updDialogChange}></textarea><br/>
                 <button onClick={addDialogBtn}>Add Dialog</button>
             </div>
             <div className={CSS.userMessages}>

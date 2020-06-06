@@ -1,28 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
 
 import App from './App';
 
-import './index.css';
+// import {BrowserRouter} from 'react-router-dom';
+import {Provider} from 'react-redux';
+import store from './redux/redux-store';
 
-import store from './redux/redux-store.js';
 
 
-export let renderDOMFunc = (state)=> {
   ReactDOM.render(
     <React.StrictMode>
-      <App state={state} store={store}/>
+      <Provider store={store}>
+        <App />
+      </Provider> 
     </React.StrictMode>,
     document.getElementById('root')
   );
-};
 
-renderDOMFunc(store.getState());
 
-store.subscribe(()=>{
-  let state = store.getState();
-  console.log(state);
-  renderDOMFunc(state);
-}); // подпись на изменения
+
 
 

@@ -5,7 +5,7 @@ import Header from './components/Header/Header.jsx';
 import SideBar from './components/SideBar/SideBar.jsx';
 import Profile from './components/Profile/Profile.jsx';
 import DialogsContainer from './components/Dialogs/DialogsContainer.jsx';
-import Music from './components/Music/Music.jsx';
+import UsersContainer from './components/Users/UsersContainer.jsx';
 import News from './components/News/News.jsx';
 import Settings from './components/Settings/Settings.jsx';
 
@@ -19,10 +19,9 @@ function App(props) {
         <Header /> 
         <SideBar />
         <div className={CSS.app_wrapper_content}>
-          <Route path='/profile' render={ () =>
-              <Profile store={props.store} state={props.state} />}/>
-          <Route path='/dialogs' render={ () => <DialogsContainer store={props.store} />} />
-          <Route path='/music' render={ () => <Music />} />
+          <Route path='/profile' render={ () => <Profile />}/>
+          <Route path='/dialogs' render={ () => <DialogsContainer />} />
+          <Route path='/users' render={ () => <UsersContainer />} />
           <Route path='/news' render={ () => <News />} />
           <Route path='/settings' render={ () => <Settings />} />
         </div>
