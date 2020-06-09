@@ -3,6 +3,7 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_STATE = 'SET-STATE'; 
 const SET_PAGE = 'SET-PAGE';
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
+const ITS_LOAD = 'ITS-LOAD';
 
 let initState = {
     users: [
@@ -11,6 +12,7 @@ let initState = {
     pageSize:7,
     totalCount: 0,
     currentPage: 1,
+    loading: false,
 }
 
 let usersReducer = ( state = initState, action)=> {
@@ -59,6 +61,11 @@ let usersReducer = ( state = initState, action)=> {
                 ...state, currentPage: action.pageNumber
             }
         }
+        case ITS_LOAD:{
+            return{
+                ...state, loading: action.mean
+            }
+        }
         default: return state;
     }
 }
@@ -68,5 +75,6 @@ export let unFollowAC = (userID) => ({type:UNFOLLOW, userID});
 export let setStateAC = (users) => ({type:SET_STATE, users})
 export let setCurrentPageAC = (pageNumber) => ({type:SET_PAGE, pageNumber});
 export let setTotalCountAC = (total) => ({type:SET_TOTAL_COUNT, totalCount:total});
+export let loadingAC = (mean) => ({type:ITS_LOAD, mean});
 
 export default usersReducer;
