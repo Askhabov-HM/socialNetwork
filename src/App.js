@@ -3,13 +3,15 @@ import {BrowserRouter,Route} from 'react-router-dom';
 
 import Header from './components/Header/Header.jsx';
 import SideBar from './components/SideBar/SideBar.jsx';
-import Profile from './components/Profile/Profile.jsx';
+import ProfileContainer from './components/Profile/ProfileContainer.jsx';
 import DialogsContainer from './components/Dialogs/DialogsContainer.jsx';
 import UsersContainer from './components/Users/UsersContainer.jsx';
 import News from './components/News/News.jsx';
 import Settings from './components/Settings/Settings.jsx';
 
 import CSS from './App.module.css';
+
+
 
 function App(props) {
   return (
@@ -19,7 +21,7 @@ function App(props) {
         <Header /> 
         <SideBar />
         <div className={CSS.app_wrapper_content}>
-          <Route path='/profile' render={ () => <Profile />}/>
+          <Route path='/profile/:userId' render={ () => <ProfileContainer />}/>
           <Route path='/dialogs' render={ () => <DialogsContainer />} />
           <Route path='/users' render={ () => <UsersContainer />} />
           <Route path='/news' render={ () => <News />} />

@@ -65,29 +65,36 @@ const mapStateToProps = (state)=>{
     }
 }
 
-const mapDispatchToProps = (dispatch)=>{
-    return{
-        follow: (userID)=>{
-            dispatch(followAC(userID));
-        },
-        unFollow: (userID) => {
-            dispatch(unFollowAC(userID));
-        },
-        setUsers: (users) => {
-            dispatch(setStateAC(users));
-        },
-        setPage: (pageNumber) => {
-            dispatch(setCurrentPageAC(pageNumber));
-        },
-        setTotalCount: (totalCount) => {
-            dispatch(setTotalCountAC(totalCount));
-        },
-        loadingFunc: (mean) => {
-            dispatch(loadingAC(mean));
-        }
-    }
-}
+// const mapDispatchToProps = (dispatch)=>{
+//     return{
+//         follow: (userID)=>{
+//             dispatch(followAC(userID));
+//         },
+//         unFollow: (userID) => {
+//             dispatch(unFollowAC(userID));
+//         },
+//         setUsers: (users) => {
+//             dispatch(setStateAC(users));
+//         },
+//         setPage: (pageNumber) => {
+//             dispatch(setCurrentPageAC(pageNumber));
+//         },
+//         setTotalCount: (totalCount) => {
+//             dispatch(setTotalCountAC(totalCount));
+//         },
+//         loadingFunc: (mean) => {
+//             dispatch(loadingAC(mean));
+//         }
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, {
+    follow:followAC,
+    unFollow:unFollowAC,
+    setUsers:setStateAC,
+    setPage:setCurrentPageAC,
+    setTotalCount:setTotalCountAC,
+    loadingFunc:loadingAC
+})(UsersContainer);
 
 
