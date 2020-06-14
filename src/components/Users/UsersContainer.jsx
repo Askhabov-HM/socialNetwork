@@ -5,17 +5,18 @@ import * as axios from 'axios';
 import Users from './Users.jsx';
 import Loader from './../Loader/Loader.jsx';
 
-import {followAC, unFollowAC, setStateAC, setCurrentPageAC, setTotalCountAC, loadingAC} from './../../redux/users-reducer'
+import {followAC, unFollowAC, setStateAC, setCurrentPageAC, setTotalCountAC, loadingAC, toggleFollowingAC} from './../../redux/users-reducer'
+import { setUsers } from '../../api/api.js';
 
 
 class UsersContainer extends React.Component  {
 
     componentDidMount(){
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+       setUsers(this.props.currentPage, this.props.pageSize)
         .then(
-            response => {
-                this.props.setUsers(response.data.items);
-                this.props.setTotalCount(response.data.totalCount);
+            data => {
+                this.props.setUsers(data.items);
+                this.props.setTotalCount(data.totalCount);
                 this.props.loadingFunc(this.props.itsLoad);
                 console.log(1);
             }
@@ -25,10 +26,9 @@ class UsersContainer extends React.Component  {
     onPageChange = (pageNumber) => {
         this.props.loadingFunc(!this.props.itsLoad);
         this.props.setPage(pageNumber);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-        .then(
-            response => {
-                this.props.setUsers(response.data.items);
+        setUsers(pageNumber, this.props.pageSize).then(
+            data => {
+                this.props.setUsers(data.items);
                 setTimeout(this.props.loadingFunc(!this.props.itsLoad), 20000);
             }
         );
@@ -39,13 +39,17 @@ class UsersContainer extends React.Component  {
             {this.props.itsLoad ? <Loader />
             : null}
             <Users
-            onPageChange = {this.onPageChange}
-            totalCount = {this.props.totalCount}
-            pageSize = {this.props.pageSize}
-            currentPage={this.props.currentPage}
-            follow = {this.props.follow}
-            unfollow = {this.props.unFollow}
-            users = {this.props.users}
+                currentPage={this.props.currentPage}
+                onPageChange = {this.onPageChange}
+                totalCount = {this.props.totalCount}
+                pageSize = {this.props.pageSize}
+                users = {this.props.users}
+                
+                followingInProgress = {this.props.followingInProgress}
+                
+                follow = {this.props.follow}
+                unfollow = {this.props.unFollow}
+                toggleFollow = { this.props.toggleFollow}
             /></>
         )
      }
@@ -62,6 +66,7 @@ const mapStateToProps = (state)=>{
         totalCount: state.usersPage.totalCount,
         currentPage: state.usersPage.currentPage,
         itsLoad: state.usersPage.loading,
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 
@@ -94,7 +99,8 @@ export default connect(mapStateToProps, {
     setUsers:setStateAC,
     setPage:setCurrentPageAC,
     setTotalCount:setTotalCountAC,
-    loadingFunc:loadingAC
+    loadingFunc:loadingAC,
+    toggleFollow:toggleFollowingAC
 })(UsersContainer);
 
 

@@ -4,6 +4,8 @@ const SET_STATE = 'SET-STATE';
 const SET_PAGE = 'SET-PAGE';
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
 const ITS_LOAD = 'ITS-LOAD';
+const TOGGLE_FOLLOWING = 'TOGGLE-FOLLOWING';
+  
 
 let initState = {
     users: [
@@ -13,6 +15,8 @@ let initState = {
     totalCount: 0,
     currentPage: 1,
     loading: false,
+    followingInProgress: [],
+    
 }
 
 let usersReducer = ( state = initState, action)=> {
@@ -24,7 +28,7 @@ let usersReducer = ( state = initState, action)=> {
                     if(u.id === action.userID){
                         return {
                             ...u,
-                            following: true,
+                            followed: true,
                         }
                     }
                     return u;
@@ -38,7 +42,7 @@ let usersReducer = ( state = initState, action)=> {
                     if(u.id === action.userID){
                         return {
                             ...u,
-                            following: false,
+                            followed: false,
                         }
                     }
                     return u 
@@ -63,7 +67,15 @@ let usersReducer = ( state = initState, action)=> {
         }
         case ITS_LOAD:{
             return{
-                ...state, loading: action.mean
+                ...state, loading: action.itLoad
+            }
+        }
+        case TOGGLE_FOLLOWING:{
+            return{
+                ...state,
+                followingInProgress: action.itLoad
+                ? [...state.followingInProgress, action.followUserId]
+                : state.followingInProgress.filter( id => id !== action.followUserId)
             }
         }
         default: return state;
@@ -75,6 +87,7 @@ export let unFollowAC = (userID) => ({type:UNFOLLOW, userID});
 export let setStateAC = (users) => ({type:SET_STATE, users})
 export let setCurrentPageAC = (pageNumber) => ({type:SET_PAGE, pageNumber});
 export let setTotalCountAC = (total) => ({type:SET_TOTAL_COUNT, totalCount:total});
-export let loadingAC = (mean) => ({type:ITS_LOAD, mean});
+export let loadingAC = (itLoad) => ({type:ITS_LOAD, itLoad});
+export let toggleFollowingAC = (itLoad, followUserId) => ({type:TOGGLE_FOLLOWING, itLoad, followUserId});
 
 export default usersReducer;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter,Route} from 'react-router-dom';
 
-import Header from './components/Header/Header.jsx';
+import HeaderContainer from './components/Header/HeaderContainer.jsx';
 import SideBar from './components/SideBar/SideBar.jsx';
 import ProfileContainer from './components/Profile/ProfileContainer.jsx';
 import DialogsContainer from './components/Dialogs/DialogsContainer.jsx';
@@ -18,7 +18,7 @@ function App(props) {
     <>
     <BrowserRouter>
       <div className={CSS.app_wrapper}>
-        <Header /> 
+        <HeaderContainer /> 
         <SideBar />
         <div className={CSS.app_wrapper_content}>
           <Route path='/profile/:userId' render={ () => <ProfileContainer />}/>

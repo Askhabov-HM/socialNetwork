@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as axios from 'axios';
 
 import Profile from './Profile';
 import { setProfilePhotoAC, setUserNameAC } from './../../redux/profile-reducer';
 import { withRouter } from 'react-router-dom';
-
+import {setProfileDataAPI} from '../../api/api'
 
 class ProfileContainer extends React.Component {
     
@@ -17,11 +16,11 @@ class ProfileContainer extends React.Component {
             userId = 2;
         }
 
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)
+        setProfileDataAPI(userId)
         .then(
-            response => {
-                this.props.setPhoto(response.data);
-                this.props.setUserName(response.data);
+            data => {
+                this.props.setPhoto(data);
+                this.props.setUserName(data);
             }
         );
     }
