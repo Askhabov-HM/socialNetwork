@@ -1,37 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as axios from 'axios';
 
 import Users from './Users.jsx';
 import Loader from './../Loader/Loader.jsx';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect'
 
-import {followAC, unFollowAC, setStateAC, setCurrentPageAC, setTotalCountAC, loadingAC, toggleFollowingAC} from './../../redux/users-reducer'
-import { setUsers } from '../../api/api.js';
+import {followAC, unFollowAC, setStateAC, setCurrentPageAC, setTotalCountAC, loadingAC, toggleFollowingAC,setUsersThunk,addFollowingThunk, deleteFolowingThunk} from './../../redux/users-reducer';
 
 
 class UsersContainer extends React.Component  {
 
     componentDidMount(){
-       setUsers(this.props.currentPage, this.props.pageSize)
-        .then(
-            data => {
-                this.props.setUsers(data.items);
-                this.props.setTotalCount(data.totalCount);
-                this.props.loadingFunc(this.props.itsLoad);
-                console.log(1);
-            }
-        );
+        this.props.loadingFunc(!this.props.itsLoad);
+        this.props.setUsersThunk(this.props.currentPage, this.props.pageSize);
+        
     }
 
     onPageChange = (pageNumber) => {
         this.props.loadingFunc(!this.props.itsLoad);
         this.props.setPage(pageNumber);
-        setUsers(pageNumber, this.props.pageSize).then(
-            data => {
-                this.props.setUsers(data.items);
-                setTimeout(this.props.loadingFunc(!this.props.itsLoad), 20000);
-            }
-        );
+        this.props.setUsersThunk(pageNumber, this.props.pageSize);
+
     }
 
     render() {
@@ -47,16 +36,14 @@ class UsersContainer extends React.Component  {
                 
                 followingInProgress = {this.props.followingInProgress}
                 
-                follow = {this.props.follow}
-                unfollow = {this.props.unFollow}
+                addFollowingThunk = {this.props.addFollowingThunk}
+                deleteFolowingThunk = {this.props.deleteFolowingThunk}
+
                 toggleFollow = { this.props.toggleFollow}
             /></>
         )
      }
 }
-
-
-
 
 
 const mapStateToProps = (state)=>{
@@ -93,6 +80,8 @@ const mapStateToProps = (state)=>{
 //     }
 // }
 
+let AuthUserContainer = withAuthRedirect(UsersContainer);
+
 export default connect(mapStateToProps, {
     follow:followAC,
     unFollow:unFollowAC,
@@ -100,7 +89,10 @@ export default connect(mapStateToProps, {
     setPage:setCurrentPageAC,
     setTotalCount:setTotalCountAC,
     loadingFunc:loadingAC,
-    toggleFollow:toggleFollowingAC
-})(UsersContainer);
+    toggleFollow:toggleFollowingAC,
+    setUsersThunk,
+    addFollowingThunk,
+    deleteFolowingThunk
+})(AuthUserContainer);
 
 

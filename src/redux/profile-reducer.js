@@ -1,3 +1,5 @@
+import {usersAPI} from './../api/api'
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_PROFILE_PHOTO = 'SET-PROFILE-PHOTO';
@@ -56,5 +58,17 @@ export let addPostActionCreator = ()=>({type:ADD_POST});
 export let updatePostTextActionCreator = (newText)=>({ type: UPDATE_POST_TEXT, newText:newText });
 export let setProfilePhotoAC = (profilePhoto) => ({ type:SET_PROFILE_PHOTO, profilePhoto });
 export let setUserNameAC = (userName) => ({ type:SET_USER_NAME, userName });
+
+export let getProfilePhotoAC = (userId) => (dispatch) => {
+    usersAPI.setProfileDataAPI(userId)
+        .then(
+            data => {
+                dispatch(setProfilePhotoAC(data));
+                dispatch(setUserNameAC(data));
+            }
+    );
+}
+
+
 
 export default profileReducer;

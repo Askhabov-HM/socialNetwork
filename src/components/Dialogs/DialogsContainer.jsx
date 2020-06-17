@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Dialogs from './Dialogs';
+import {compose} from 'redux';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 import
     {sendMessageActionCreator,
@@ -8,7 +10,6 @@ import
     updDialogChangeActionCreator} from '../../redux/dialogs-reducer.js';
 
 import {connect} from 'react-redux';
-
 
 const mapStateToProps = (state) => {
     return {
@@ -19,24 +20,32 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addDialog: (dialogTitle) => {
-            dispatch(addDialogActionCreator(dialogTitle));
-        },
-        dialogChange: (updDialogTitle) => {
-            dispatch(updDialogChangeActionCreator(updDialogTitle));
-        },
-        sendMessage: (messageText) => {
-            dispatch(sendMessageActionCreator(messageText));
-        },
-        updateMessage: (newMessage) => {
-            dispatch(updateMessageActionCreator(newMessage));
-        }
-    }
-}
+export default compose(
+    connect(mapStateToProps,
+        {
+            addDialog: addDialogActionCreator,
+            dialogChange: updDialogChangeActionCreator,
+            sendMessage: sendMessageActionCreator,
+            updateMessage: updateMessageActionCreator,
+        }),
+        withAuthRedirect
+)(Dialogs)
 
 
-const DialogsContainer = connect(mapStateToProps,mapDispatchToProps)(Dialogs);
 
-export default DialogsContainer;
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         addDialog: (dialogTitle) => {
+//             dispatch(addDialogActionCreator(dialogTitle));
+//         },
+//         dialogChange: (updDialogTitle) => {
+//             dispatch(updDialogChangeActionCreator(updDialogTitle));
+//         },
+//         sendMessage: (messageText) => {
+//             dispatch(sendMessageActionCreator(messageText));
+//         },
+//         updateMessage: (newMessage) => {
+//             dispatch(updateMessageActionCreator(newMessage));
+//         }
+//     }
+// }

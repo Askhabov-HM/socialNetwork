@@ -1,10 +1,12 @@
 import React from 'react';
+import {compose} from 'redux';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom'; 
 
 import Profile from './Profile';
-import { setProfilePhotoAC, setUserNameAC } from './../../redux/profile-reducer';
+import { setProfilePhotoAC, setUserNameAC, getProfilePhotoAC } from './../../redux/profile-reducer';
 import { withRouter } from 'react-router-dom';
-import {setProfileDataAPI} from '../../api/api'
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 class ProfileContainer extends React.Component {
     
@@ -16,13 +18,15 @@ class ProfileContainer extends React.Component {
             userId = 2;
         }
 
-        setProfileDataAPI(userId)
-        .then(
-            data => {
-                this.props.setPhoto(data);
-                this.props.setUserName(data);
-            }
-        );
+        this.props.getProfilePhotoAC(userId);
+
+        // usersAPI.setProfileDataAPI(userId)
+        // .then(
+        //     data => {
+        //         this.props.setPhoto(data);
+        //         this.props.setUserName(data);
+        //     }
+        // );
     }
 
     render() {
@@ -32,19 +36,31 @@ class ProfileContainer extends React.Component {
         </>)
     }
 }
-
-
-
 const mapStateToProps = (state) => {
     return {
         profilePhoto: state.profilePage.profilePhoto,
-        profileUserName: state.profilePage.userName
+        profileUserName: state.profilePage.userName,
     }
 }
 
-let withProfilePhoto = withRouter(ProfileContainer);
+export default compose(
+    connect(mapStateToProps,{
+        setPhoto: setProfilePhotoAC,
+        setUserName: setUserNameAC,
+        getProfilePhotoAC,
+    }),
+    withRouter,
+    withAuthRedirect
+)(ProfileContainer)
 
-export default connect(mapStateToProps,{
-    setPhoto: setProfilePhotoAC,
-    setUserName: setUserNameAC,
-})(withProfilePhoto);
+// let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
+
+
+
+// let withProfilePhoto = withRouter(AuthRedirectComponent);
+
+// export default connect(mapStateToProps,{
+//     setPhoto: setProfilePhotoAC,
+//     setUserName: setUserNameAC,
+//     getProfilePhotoAC,
+// })(withProfilePhoto);

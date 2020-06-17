@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import DialogsItem from './DialogsItem/DialogsItem.jsx';
-import Message from './Messages/Messages.jsx'
+import Message from './Messages/Messages.jsx';
+
+import { Redirect } from 'react-router-dom'; 
 
 import CSS from './Dialogs.module.css';
 
@@ -34,6 +36,7 @@ const Dialogs = (props) => {
         let newDialogTitle = e.target.value;
         props.dialogChange(newDialogTitle);
     }
+
 
     return (
         <div className={CSS.dialogsPage}>
