@@ -8,7 +8,7 @@ import DialogsContainer from './components/Dialogs/DialogsContainer.jsx';
 import UsersContainer from './components/Users/UsersContainer.jsx';
 import News from './components/News/News.jsx';
 import Settings from './components/Settings/Settings.jsx';
-import Login from './components/Login/Login';
+import LoginContainer from './components/Login/LoginContainer';
 
 import CSS from './App.module.css';
 
@@ -27,7 +27,7 @@ function App(props) {
           <Route path='/users' render={ () => <UsersContainer />} />
           <Route path='/news' render={ () => <News />} />
           <Route path='/settings' render={ () => <Settings />} />
-          <Route path='/login' render={ () => <Login />} />
+          <Route path='/login' render={ () => <LoginContainer />} />
         </div>
       </div>
       

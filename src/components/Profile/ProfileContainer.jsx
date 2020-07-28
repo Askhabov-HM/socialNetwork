@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom'; 
 
 import Profile from './Profile';
-import { setProfilePhotoAC, setUserNameAC, getProfilePhotoAC } from './../../redux/profile-reducer';
+import { setProfilePhotoAC, setUserNameAC, getProfilePhotoAC, getUserStatusThunk,updateUserStatusThunk } from './../../redux/profile-reducer';
 import { withRouter } from 'react-router-dom';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
@@ -19,6 +19,7 @@ class ProfileContainer extends React.Component {
         }
 
         this.props.getProfilePhotoAC(userId);
+        this.props.getUserStatusThunk(userId);
 
         // usersAPI.setProfileDataAPI(userId)
         // .then(
@@ -32,7 +33,12 @@ class ProfileContainer extends React.Component {
     render() {
         return(
         <>
-            <Profile {...this.props} photo={this.props.profilePhoto} profileUserName={this.props.profileUserName}/>
+            <Profile {...this.props}
+                photo={this.props.profilePhoto}
+                profileUserName={this.props.profileUserName}
+                status={this.props.status}
+                updateStatus={this.props.updateUserStatusThunk}
+                />
         </>)
     }
 }
@@ -40,6 +46,7 @@ const mapStateToProps = (state) => {
     return {
         profilePhoto: state.profilePage.profilePhoto,
         profileUserName: state.profilePage.userName,
+        status: state.profilePage.status,
     }
 }
 
@@ -48,6 +55,9 @@ export default compose(
         setPhoto: setProfilePhotoAC,
         setUserName: setUserNameAC,
         getProfilePhotoAC,
+        getUserStatusThunk,
+        updateUserStatusThunk
+
     }),
     withRouter,
     withAuthRedirect

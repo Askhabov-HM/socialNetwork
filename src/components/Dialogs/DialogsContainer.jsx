@@ -5,9 +5,7 @@ import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 
 import
     {sendMessageActionCreator,
-    updateMessageActionCreator,
-    addDialogActionCreator,
-    updDialogChangeActionCreator} from '../../redux/dialogs-reducer.js';
+    addDialogActionCreator,} from '../../redux/dialogs-reducer.js';
 
 import {connect} from 'react-redux';
 
@@ -24,9 +22,7 @@ export default compose(
     connect(mapStateToProps,
         {
             addDialog: addDialogActionCreator,
-            dialogChange: updDialogChangeActionCreator,
             sendMessage: sendMessageActionCreator,
-            updateMessage: updateMessageActionCreator,
         }),
         withAuthRedirect
 )(Dialogs)

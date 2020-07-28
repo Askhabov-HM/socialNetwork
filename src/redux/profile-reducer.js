@@ -1,9 +1,10 @@
-import {usersAPI} from './../api/api'
+import {usersAPI, profileAPI} from './../api/api'
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT = 'UPDATE-POST-TEXT';
 const SET_PROFILE_PHOTO = 'SET-PROFILE-PHOTO';
 const SET_USER_NAME = 'SET-USER-NAME';
+const SET_STATUS = 'SET-STATUS';
 
 let initState = {
     postTextData: [
@@ -14,6 +15,7 @@ let initState = {
     newPostText: 'ggg',
     profilePhoto: null,
     userName: null,
+    status:'----'
 }
 
 
@@ -50,6 +52,12 @@ const profileReducer = (state = initState, action) => {
                 userName: action.userName
             }
         }
+        case SET_STATUS:{
+            return {
+                ...state,
+                status: action.status
+            }
+        }
         default: return state;
     }
 }
@@ -58,6 +66,7 @@ export let addPostActionCreator = ()=>({type:ADD_POST});
 export let updatePostTextActionCreator = (newText)=>({ type: UPDATE_POST_TEXT, newText:newText });
 export let setProfilePhotoAC = (profilePhoto) => ({ type:SET_PROFILE_PHOTO, profilePhoto });
 export let setUserNameAC = (userName) => ({ type:SET_USER_NAME, userName });
+export const setUserStatus = (status) => ({ type:SET_STATUS, status})
 
 export let getProfilePhotoAC = (userId) => (dispatch) => {
     usersAPI.setProfileDataAPI(userId)
@@ -68,6 +77,27 @@ export let getProfilePhotoAC = (userId) => (dispatch) => {
             }
     );
 }
+
+export let getUserStatusThunk = (userId) => (dispatch) => {
+    profileAPI.getUserStatus(userId)
+    .then(
+        response => {
+            dispatch(setUserStatus(response.data))
+        }
+    )
+}
+
+export let updateUserStatusThunk = (status) => (dispatch) => {
+    profileAPI.updateUserStatus(status)
+    .then(
+        response => {
+            // debugger;
+            if(response.data.resultCode === 0){
+                dispatch(setUserStatus(status))
+            }
+        }
+    )
+} 
 
 
 

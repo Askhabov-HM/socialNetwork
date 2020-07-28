@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import {Field, reduxForm} from 'redux-form';
+
 import DialogsItem from './DialogsItem/DialogsItem.jsx';
 import Message from './Messages/Messages.jsx';
-
-import { Redirect } from 'react-router-dom'; 
+import AddNewMessage from './AddNewMessage/AddNewMessage.jsx';
+import AddNewDialog from './AddNewDialog/AddNewDialog.jsx';
 
 import CSS from './Dialogs.module.css';
 
@@ -13,42 +15,24 @@ const Dialogs = (props) => {
 
     let messagesGenerate = props.messagesData.map(m => <Message key={m.id} messageText={m.text} sender={m.sender} />)
 
-    let sendMassageBtnRef = React.createRef();
-
-    let addDialogBtnRef = React.createRef();
-
-    let sendMessageBtn = () => {
-        let messageText = sendMassageBtnRef.current.value;
-        props.sendMessage(messageText);
+    let addDialogBtn = (dialogName) => {
+        props.addDialog(dialogName.addNewDialog);
+        console.log(dialogName)
     }
 
-    let sendMessageChange = (e) => {
-        let newMessage = e.target.value;
-        props.updateMessage(newMessage);
+    let addMessageBtn = (messageText) => {
+        props.sendMessage(messageText.addNewMessage);
     }
-
-    let addDialogBtn = () => {
-        let dialogTitle = addDialogBtnRef.current.value;
-        props.addDialog(dialogTitle);
-    }
-
-    let updDialogChange = (e) => {
-        let newDialogTitle = e.target.value;
-        props.dialogChange(newDialogTitle);
-    }
-
 
     return (
         <div className={CSS.dialogsPage}>
             <div className={CSS.dialogsList}>
                 {dialogsGenerate}
-                <textarea value={props.newDialogText} name="" id="" cols="20" rows="5" ref={addDialogBtnRef} onChange={updDialogChange}></textarea><br/>
-                <button onClick={addDialogBtn}>Add Dialog</button>
+                <AddNewDialog onSubmit={addDialogBtn}/>
             </div>
             <div className={CSS.userMessages}>
                 {messagesGenerate}
-                <textarea value={props.newMessageText} name="" id="" cols="30" rows="5" ref={sendMassageBtnRef} onChange={sendMessageChange}></textarea><br/>
-                <button onClick={sendMessageBtn}>Send Message</button>
+                <AddNewMessage onSubmit={addMessageBtn}/>
             </div>
         </div>
     )
