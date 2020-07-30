@@ -22,7 +22,7 @@ function App(props) {
         <HeaderContainer /> 
         <SideBar />
         <div className={CSS.app_wrapper_content}>
-          <Route path='/profile/:userId' render={ () => <ProfileContainer />}/>
+          <Route path='/profile' render={ () => <ProfileContainer />}/>
           <Route path='/dialogs' render={ () => <DialogsContainer />} />
           <Route path='/users' render={ () => <UsersContainer />} />
           <Route path='/news' render={ () => <News />} />

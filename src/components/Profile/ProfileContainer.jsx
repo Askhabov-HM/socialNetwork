@@ -13,9 +13,11 @@ class ProfileContainer extends React.Component {
     componentDidMount() {
         
         let userId = this.props.match.params.userId;
+        
 
         if(!userId){
-            userId = 2;
+            userId = this.props.authUserID;
+            
         }
 
         this.props.getProfilePhotoAC(userId);
@@ -47,6 +49,8 @@ const mapStateToProps = (state) => {
         profilePhoto: state.profilePage.profilePhoto,
         profileUserName: state.profilePage.userName,
         status: state.profilePage.status,
+        authUserID: state.auth.id,
+        isAuth: state.auth.isAuth,
     }
 }
 

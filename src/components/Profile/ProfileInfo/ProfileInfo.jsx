@@ -6,14 +6,12 @@ import CSS from './ProfileInfo.module.css';
 import Loader from './../../Loader/Loader'
 
 const ProfileInfo = (props) => {
-  console.log(props)
   if(!props.profile ){
     return <Loader />
   }
   if(!props.profileUserName){
     return <Loader />
   }
-  console.log(props.profile);
   return (
     <div>
       {/* <div>
