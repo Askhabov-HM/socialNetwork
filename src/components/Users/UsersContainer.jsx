@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import {getUsers, getPageSize, getTotalCount, getCurrentPage, loading, followingInProgress} from '../../redux/selectors/users-selectors'
+ 
 import Users from './Users.jsx';
 import Loader from './../Loader/Loader.jsx';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect'
@@ -48,14 +49,29 @@ class UsersContainer extends React.Component  {
 
 const mapStateToProps = (state)=>{
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalCount: state.usersPage.totalCount,
-        currentPage: state.usersPage.currentPage,
-        itsLoad: state.usersPage.loading,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalCount: getTotalCount(state),
+        currentPage: getCurrentPage(state),
+        itsLoad: loading(state),
+        followingInProgress: followingInProgress(state)
     }
 }
+
+let AuthUserContainer = withAuthRedirect(UsersContainer);
+
+export default connect(mapStateToProps, {
+    follow:followAC,
+    unFollow:unFollowAC,
+    setUsers:setStateAC,
+    setPage:setCurrentPageAC,
+    setTotalCount:setTotalCountAC,
+    loadingFunc:loadingAC,
+    toggleFollow:toggleFollowingAC,
+    setUsersThunk,
+    addFollowingThunk,
+    deleteFolowingThunk
+})(AuthUserContainer);
 
 // const mapDispatchToProps = (dispatch)=>{
 //     return{
@@ -80,19 +96,6 @@ const mapStateToProps = (state)=>{
 //     }
 // }
 
-let AuthUserContainer = withAuthRedirect(UsersContainer);
 
-export default connect(mapStateToProps, {
-    follow:followAC,
-    unFollow:unFollowAC,
-    setUsers:setStateAC,
-    setPage:setCurrentPageAC,
-    setTotalCount:setTotalCountAC,
-    loadingFunc:loadingAC,
-    toggleFollow:toggleFollowingAC,
-    setUsersThunk,
-    addFollowingThunk,
-    deleteFolowingThunk
-})(AuthUserContainer);
 
 

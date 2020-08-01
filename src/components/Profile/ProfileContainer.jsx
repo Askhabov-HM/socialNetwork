@@ -18,6 +18,9 @@ class ProfileContainer extends React.Component {
         if(!userId){
             userId = this.props.authUserID;
             
+            if(!userId){
+                this.history.push('login/');
+            }
         }
 
         this.props.getProfilePhotoAC(userId);
