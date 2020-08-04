@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import ProfileStatus from './ProfileStatus';
+import ProfileStatusWithHook from './ProfileStatusWithHook';
 import CSS from './ProfileInfo.module.css';
 
 import Loader from './../../Loader/Loader'
@@ -23,7 +23,7 @@ const ProfileInfo = (props) => {
             : "https://www.shutterstock.com/blog/wp-content/uploads/sites/5/2019/07/Man-Silhouette.jpg"} alt="" />
         <br/> 
         {props.profileUserName.fullName}
-        <ProfileStatus status={props.status} updateStatus={props.updateStatus} />
+        <ProfileStatusWithHook status={props.status} updateStatus={props.updateStatus} />
       </div>
     </div>
   );
