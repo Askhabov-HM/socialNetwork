@@ -6,10 +6,10 @@ import { Textarea } from '../../commons/FormControls/FormsControl';
 let required = requiredField('dialog');
 let maxLength = maxLengthCreator(30);
 
-const AddNewPostForm = (props) => {
+const AddNewPostForm = ({handleSubmit, ...restProps}) => {
     return (
         <>
-            <form onSubmit={props.handleSubmit} action="">
+            <form onSubmit={handleSubmit} action="">
                 <Field
                     component={Textarea}
                     name='addNewPost'

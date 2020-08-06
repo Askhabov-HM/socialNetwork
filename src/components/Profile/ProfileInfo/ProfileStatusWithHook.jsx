@@ -1,14 +1,13 @@
 import React, { useState, useEffect  } from 'react';
 
-
-const ProfileStatus = (props) => {
+const ProfileStatus = ({status, updateStatus, ...restProps}) => {
     let [editMode, setEditMode] = useState(false);
-    let [status, setStatus] = useState(props.status);
+    let [statusUseState, setStatus] = useState(status);
 
     useEffect( ()=> {
-        setStatus(props.status);
+        setStatus(status);
 
-    }, [props.status])
+    }, [status]);
 
     const activateEditMode = () => {
         setEditMode(true);            
@@ -16,27 +15,24 @@ const ProfileStatus = (props) => {
 
     const deactivateEditMode = () => {
         setEditMode(false);
-        props.updateStatus(status)
+        updateStatus(statusUseState)
     }
 
     const onStatusChange = (e) => {
         setStatus(e.currentTarget.value);
-        // this.setState({
-        //     status: e.currentTarget.value,
-        // });
     }
 
     return (
         <>
             { !editMode ?
                 <div>
-                    <span onDoubleClick={activateEditMode} >{props.status ? props.status : 'userStatusIsNull'}</span>
+                    <span onDoubleClick={activateEditMode} >{status ? status : 'userStatusIsNull'}</span>
                 </div>
             :
                 <div>
                     <input  onChange={onStatusChange} 
                             onBlur={deactivateEditMode}
-                            value={status}
+                            value={statusUseState}
                             autoFocus={true}
                             type="text"/>
                 </div>
@@ -44,43 +40,5 @@ const ProfileStatus = (props) => {
         </>
     )
 }
-
-// class ProfileStatus extends React.Component  {
-//     state={
-//         editMode: false,
-//         status: this.props.status,
-//     }
-
-//     activateEditMode() {
-//         this.setState({
-//             editMode: true
-//         })
-//     }
-
-//     deactivateEditMode() {
-//         this.setState({
-//             editMode: false,
-//         });
-//         this.props.updateStatus(this.state.status)
-//     }
-
-//     onStatusChange = (e) => {
-//         this.setState({
-//             status: e.currentTarget.value,
-//         });
-//     }
-
-//     componentDidUpdate(prevProps, prevState) {
-//         if( prevProps.status !== this.props.status){
-//             this.setState({
-//                 status: this.props.status
-//             });
-//         }
-//     }
-
-//     render() {
-//         return true
-//     }
-// }
 
 export default ProfileStatus;

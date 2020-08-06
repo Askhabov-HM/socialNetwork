@@ -2,19 +2,16 @@ import React, { Component } from 'react';
 import MyPostsContainer from './MyPosts/MyPostsContainer.jsx';
 import ProfileInfo from './ProfileInfo/ProfileInfo.jsx';
 
-import { Redirect } from 'react-router-dom';  
-
-
-const Profile = (props) => {
+const Profile = ({ photo, profileUserName, status, updateStatus, ...restProps}) => {
 
   return (
     <>
       <div>
         <ProfileInfo
-                profile={props.photo}
-                profileUserName={props.profileUserName}
-                status={props.status}
-                updateStatus={props.updateStatus}/>
+                profile={photo}
+                profileUserName={profileUserName}
+                status={status}
+                updateStatus={updateStatus}/>
         <MyPostsContainer/>
       </div>
     </>

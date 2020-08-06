@@ -7,13 +7,13 @@ import CSS from './SideBar.module.css';
 
 
 
-const SideBar = (props) => {
-    let id = props.id
+const SideBar = ({id, ...restProps}) => {
+    let pathId = id
 
     return (
         <>
             <nav className={CSS.nav}>
-                <div><NavLink to={`/profile/${id}`} activeClassName={CSS.activeLink}>Profile</NavLink></div>
+                <div><NavLink to={`/profile/${pathId}`} activeClassName={CSS.activeLink}>Profile</NavLink></div>
                 <div><NavLink to='/dialogs' activeClassName={CSS.activeLink}>Dialogs</NavLink></div>
                 <div><NavLink to='/users' activeClassName={CSS.activeLink}>Users</NavLink></div>
                 <div><NavLink to='/news' activeClassName={CSS.activeLink}>News</NavLink></div>

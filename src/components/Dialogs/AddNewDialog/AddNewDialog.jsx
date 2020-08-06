@@ -7,10 +7,10 @@ let maxLength20 = maxLengthCreator(20)
 let requiredDialog = requiredField('dialog');
 
 
-const AddNewDialog = (props) =>{
+const AddNewDialog = ({handleSubmit , ...restProps}) =>{
     return(
         <>
-            <form onSubmit={props.handleSubmit} action="">
+            <form onSubmit={handleSubmit} action="">
                 <Field 
                     component={Textarea} 
                     name='addNewDialog' 

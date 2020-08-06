@@ -8,9 +8,9 @@ import { Input } from '../commons/FormControls/FormsControl';
 
 let required = requiredField('');
 
-const LoginForm = (props)=> {
+const LoginForm = ({ handleSubmit, error, ...restProps})=> {
     return(
-        <form action="" onSubmit={props.handleSubmit}>
+        <form action="" onSubmit={handleSubmit}>
             <div>
                 <Field placeholder={'Email'} name={'email'} component={Input}
                     validate={[required]}
@@ -24,8 +24,8 @@ const LoginForm = (props)=> {
             <div>
                 <Field type='checkbox' name={'rememberMe'} component={Input}/> remember me
             </div>
-            {props.error && <div className={style.warnLogin}>
-                {props.error}
+            {error && <div className={style.warnLogin}>
+                {error}
             </div>}
             <div>
                 <button>Login</button>

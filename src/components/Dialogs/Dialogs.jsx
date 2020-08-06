@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Field, reduxForm} from 'redux-form';
 
 import DialogsItem from './DialogsItem/DialogsItem.jsx';
 import Message from './Messages/Messages.jsx';
@@ -9,19 +8,18 @@ import AddNewDialog from './AddNewDialog/AddNewDialog.jsx';
 import CSS from './Dialogs.module.css';
 
 
-const Dialogs = (props) => {
+const Dialogs = ({dialogsData, messagesData, addDialog, sendMessage, ...restProps  }) => {
     
-    let dialogsGenerate = props.dialogsData.map(d => <DialogsItem key={d.id} name={d.name} pathNumber={d.id} />);
+    let dialogsGenerate = dialogsData.map(d => <DialogsItem key={d.id} name={d.name} pathNumber={d.id} />);
 
-    let messagesGenerate = props.messagesData.map(m => <Message key={m.id} messageText={m.text} sender={m.sender} />)
+    let messagesGenerate = messagesData.map(m => <Message key={m.id} messageText={m.text} sender={m.sender} />)
 
     let addDialogBtn = (dialogName) => {
-        props.addDialog(dialogName.addNewDialog);
-        console.log(dialogName)
+        addDialog(dialogName.addNewDialog);
     }
 
     let addMessageBtn = (messageText) => {
-        props.sendMessage(messageText.addNewMessage);
+        sendMessage(messageText.addNewMessage);
     }
 
     return (

@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import CSS from './Post.module.css';
 
-const Post = (props) => {
+const Post = ({message, likes, ...restProps}) => {
     return (
       <div className={CSS.item}>
-        {props.message}<br/>
-        <span>likes {props.likes}</span>
+        {message}<br/>
+        <span>likes {likes}</span>
       </div>
     );
 }

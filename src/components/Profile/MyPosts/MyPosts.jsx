@@ -7,15 +7,15 @@ import CSS from './MyPosts.module.css';
 
 
 
-const MyPosts = (props) => {
-  let postGenerate = props.posts.map(p => <Post key={p.id} message={p.text} likes={p.likeCount} />);
+const MyPosts = ({ posts, addPost, updatePostText, ...restProps}) => {
+  let postGenerate = posts.map(p => <Post key={p.id} message={p.text} likes={p.likeCount} />);
 
   let addPostBtn = () => {
-    props.addPost();
-  }; // ФИЯ ДОБАВЛЯЕТ ПОСТ ПРИ КЛИКЕ НА BTN ADDPOST
+    addPost();
+  }; 
 
   let textAreaChange = (postText) => {
-    props.updatePostText(postText.addNewPost);
+    updatePostText(postText.addNewPost);
   };
 
   return (

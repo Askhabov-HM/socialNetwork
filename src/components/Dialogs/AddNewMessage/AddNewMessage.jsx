@@ -6,10 +6,10 @@ import { Textarea } from '../../commons/FormControls/FormsControl';
 let maxLength100 = maxLengthCreator(100);
 let required = requiredField('message');
 
-const AddNewMessage = (props) => {
+const AddNewMessage = ({ handleSubmit, ...restProps}) => {
     return(
         <>
-            <form onSubmit={props.handleSubmit} action="">
+            <form onSubmit={handleSubmit} action="">
                 <Field
                     component={Textarea} 
                     name='addNewMessage' 
